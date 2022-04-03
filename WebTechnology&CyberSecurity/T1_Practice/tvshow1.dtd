@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- tv show is root element -->
+<!-- + shows we will have atleast one show -->
+<!ELEMENT tvshows (show)+>
+<!-- ? for optional -->
+<!ELEMENT show (name,release,network+,description,actors,poster?,viewers?,(end_date | next_episode))>
+<!-- it contains data not child elements -->
+<!ELEMENT name (#PCDATA)> <!-- parsed caracter data -->
+<!ATTLIST name id_code ID #REQUIRED>
+<!ELEMENT release (#PCDATA)>
+<!ELEMENT network (#PCDATA)>
+<!ATTLIST network country CDATA #REQUIRED>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT actors (actor)*>
+<!ELEMENT actor (real_name,character)>
+<!ELEMENT real_name (#PCDATA)>
+<!ELEMENT character (#PCDATA)>
+<!ATTLIST charcter profession CDATA #IMPLIED>
+<!-- EMPTY poster i.e. no need to close the tags -->
+<!ELEMENT poster EMPTY>
+<!-- implied means it may or may not contain value -->
+<!ATTLIST poster href CDATA #IMPLIED>
+<!ATTLIST poster width CDATA #IMPLIED>
+<!ATTLIST poster height CDATA #IMPLIED>
+<!ATTLIST poster show_id IDREF #IMPLIED>
+<!ELEMENT viewers (#PCDATA)>
+<!-- enum values for units -->
+<!ATTLIST viewers units (thousand | million) #IMPLIED>
+<!ELEMENT end_date (#PCDATA)>
+<!ELEMENT nest_episode (#PCDATA)>
+<!--  -->
+<!-- We can use Entities to replace in textural format -->
+<!-- Now we can use %pd in place of (#PCDATA) -->
+<!-- It is knows as parameter entity -->
+<!-- <!ENTITY % pd "(#PCDATA)">
+it can be used as &great in xml file
+<!ENTITY great "That was Great"> -->

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE 6 SYSTEM "./tvshow1.dtd">
+
+<tvshows>
+    <show>
+        <name id_code="idvalue0">name</name>
+        <release>release</release>
+        <network country="India">network</network>
+        <description>Description of the show</description>
+        <actors>
+            <actor>
+                <real_name>Amit</real_name>
+                <character>Ninja</character>
+            </actor>
+        </actors>
+        <poster href="hrrps://" width="2.0" height="1.0" show_id="idvalue0" />
+        <end_date>endDateHere</end_date>
+
+    </show>
+</tvshows>
