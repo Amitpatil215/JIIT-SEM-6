@@ -1,0 +1,20 @@
+{
+    "$schema": "./spacestation_schema.json",
+    "name": "Telsa Space",
+    "population": 6,
+    "active": true,
+    "plants": [
+        {
+            "plantname": "Green Plant",
+            "leaf": 5,
+            "poisonus": false,
+            "category": "b"
+        },
+        {
+            "plantname": "Small yeeloow",
+            "leaf": 2,
+            "poisonus": true,
+            "category": "b"
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://amitpatil/spacestaion",
+    "title": "Spacestaion Schema",
+    "description": "Describes space station",
+    "properties": {
+        "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 20
+        },
+        "population": {
+            "type": "integer",
+            "description": "Current no of people in place station",
+            "exclusiveMinimum": 5,
+            "exclusiveMaximum": 1000
+        },
+        "active": {
+            "type": "boolean"
+        },
+        "plants": {
+            "type": "array",
+            "minimum": 2,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "plantname": {
+                        "type": "string",
+                        "pattern": "\\w[ ]?\\w"
+                    },
+                    "leaf": {
+                        "type": "integer"
+                    },
+                    "poisonus": {
+                        "type": "boolean"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "a",
+                            "b",
+                            "c"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "plantname",
+                "leaf",
+                "posonus",
+                "category"
+            ]
+        }
+    },
+    "required": [
+        "name",
+        "population",
+        "active",
+        "plants"
+    ],
+    "additionalProperties": true
+}

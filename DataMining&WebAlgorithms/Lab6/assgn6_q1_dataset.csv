@@ -1,0 +1,19 @@
+S no.,branch,cgpa,gamer,movie_fanatic,commited
+1,CSE,high,yes,no,no
+2,CSE,low,yes,no,no
+3,CSE,high,yes,yes,no
+4,CSE,high,no,no,yes
+5,CSE,low,no,yes,yes
+6,ECE,low,yes ,no,no
+7,ECE,high,yes,yes,yes
+8,ECE,low,yes,yes,no
+9,ECE,high,yes,yes,yes
+10,ECE,high,no,yes,yes
+11,MECH,high,yes,yes,no
+12,MECH,high,no,no,no
+13,MECH,high,no,no,yes
+14,MECH,low,no,no,yes
+15,MECH,low,no,no,yes
+16,CSE,high,yes,no,no
+17,ECE,low,yes,no,no
+18,MECH,low,no,yes,no

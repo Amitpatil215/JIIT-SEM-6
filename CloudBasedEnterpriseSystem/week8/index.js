@@ -99,9 +99,8 @@ app.get('/insertValues', (req, res) => {
     res.send("Records Inserted Successfully")
 })
 
-//TODO: this function giving error on repeated calls ....json and xml function working fine  
-app.get('/show', async (req, res) => {
-    let isXml = req.query.isXml; //other wise bydefault JSON
+app.get('/showxml', async (req, res) => {
+    // let isXml = req.query.isXml; //other wise bydefault JSON
     let isDonwload = req.query.isDonwload;
     let mysql = require('mysql');
     let connection = mysql.createConnection({
@@ -132,20 +131,69 @@ app.get('/show', async (req, res) => {
                     rows.push(row);
                     // console.log(row)
                 });
-                if (isXml == true) {
-                    console.log("in XML")
-                    res.set('Content-Type', 'application/xml');
-                    xml_resultArray = js2xmlparser.parse("student", rows)
-                    console.log(xml_resultArray)
-                    return res.send(xml_resultArray);
-                } 
-                // else {
-                //     console.log("in JSON")
-                //     resultArray = Object.values(JSON.parse(JSON.stringify(rows)))
-                //     res.send(resultArray)
-                //     return res.send(resultArray);
+                // if (isXml == true) {
+                console.log("in XML")
+                res.set('Content-Type', 'application/xml');
+                xml_resultArray = js2xmlparser.parse("student", rows)
+                console.log(xml_resultArray)
+                return res.send(xml_resultArray);
 
-                // }
+            }
+            if (fields) {
+                // console.log(fields);
+            }
+
+        });
+
+        connection.end(function (err) {
+            if (err) {
+                console.log(err.message);
+            }
+        });
+    });
+})
+
+app.get('/downloadxml', async (req, res) => {
+    // let isXml = req.query.isXml; //other wise bydefault JSON
+    let isDonwload = req.query.isDonwload;
+    let mysql = require('mysql');
+    let connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'studentdb'
+    });
+
+    var rows = []
+
+    // connect to the MySQL server
+    connection.connect(function (err) {
+        if (err) {
+            return console.error('error: ' + err.message);
+        }
+
+        let getAllRows = `SELECT * FROM student`;
+
+        connection.query(getAllRows, function (err, results, fields) {
+            if (err) {
+                console.log(err.message);
+            }
+            if (results) {
+                console.log("Fetched Rows Success " + results)
+                Object.keys(results).forEach(function (key) {
+                    var row = results[key];
+                    rows.push(row);
+
+                });
+
+                res.set('Content-Type', 'application/xml');
+                xml_resultArray = js2xmlparser.parse("student", rows)
+
+                const fileName = 'studentData.xml';
+
+                res.set('Content-disposition', `attachment; filename=${fileName}`);
+                return res.json(xml_resultArray);
+
             }
             if (fields) {
                 // console.log(fields);
@@ -163,6 +211,108 @@ app.get('/show', async (req, res) => {
 
 
 
+
+app.get('/showjson', async (req, res) => {
+    let isDonwload = req.query.isDonwload;
+    let mysql = require('mysql');
+    let connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'studentdb'
+    });
+
+    var rows = []
+
+    // connect to the MySQL server
+    connection.connect(function (err) {
+        if (err) {
+            return console.error('error: ' + err.message);
+        }
+
+        let getAllRows = `SELECT * FROM student`;
+
+        connection.query(getAllRows, function (err, results, fields) {
+            if (err) {
+                console.log(err.message);
+            }
+            if (results) {
+                console.log("Fetched Rows Success " + results)
+                Object.keys(results).forEach(function (key) {
+                    var row = results[key];
+                    rows.push(row);
+                    // console.log(row)
+                });
+
+                console.log("in JSON")
+                res.set('Content-Type', 'application/json');
+                resultArray = Object.values(JSON.parse(JSON.stringify(rows)))
+                return res.send(resultArray);
+            }
+            if (fields) {
+                // console.log(fields);
+            }
+        });
+
+        connection.end(function (err) {
+            if (err) {
+                console.log(err.message);
+            }
+        });
+    });
+})
+
+
+app.get('/downloadjson', async (req, res) => {
+    let isDonwload = req.query.isDonwload;
+    let mysql = require('mysql');
+    let connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'studentdb'
+    });
+
+    var rows = []
+
+    // connect to the MySQL server
+    connection.connect(function (err) {
+        if (err) {
+            return console.error('error: ' + err.message);
+        }
+
+        let getAllRows = `SELECT * FROM student`;
+
+        connection.query(getAllRows, function (err, results, fields) {
+            if (err) {
+                console.log(err.message);
+            }
+            if (results) {
+                console.log("Fetched Rows Success " + results)
+                Object.keys(results).forEach(function (key) {
+                    var row = results[key];
+                    rows.push(row);
+                    // console.log(row)
+                });
+                resultArray = Object.values(JSON.parse(JSON.stringify(rows)))
+                res.set('Content-Type', 'application/json');
+                const fileName = 'studentData.json';
+
+                res.set('Content-disposition', `attachment; filename=${fileName}`);
+                return res.json(resultArray);
+            }
+            if (fields) {
+                // console.log(fields);
+            }
+        });
+
+        connection.end(function (err) {
+            if (err) {
+                console.log(err.message);
+            }
+        });
+    });
+})
 
 
 app.listen(port, () => {
