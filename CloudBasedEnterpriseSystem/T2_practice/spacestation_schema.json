@@ -3,6 +3,11 @@
     "$id": "http://amitpatil/spacestaion",
     "title": "Spacestaion Schema",
     "description": "Describes space station",
+    "dependencies": {
+        "name": [
+            "population"
+        ]
+    },
     "properties": {
         "name": {
             "type": "string",
@@ -16,40 +21,59 @@
             "exclusiveMaximum": 1000
         },
         "active": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
         },
         "plants": {
             "type": "array",
-            "minimum": 2,
-            "items": {
-                "type": "object",
-                "properties": {
-                    "plantname": {
-                        "type": "string",
-                        "pattern": "\\w[ ]?\\w"
+            "minItems": 2,
+            "maxItems": 4,
+            "items": [
+                {
+                    "type": "object",
+                    "uniqueItems": true,
+                    "minProperties": 1,
+                    "maxProperties": 6,
+                    "properties": {
+                        "plantname": {
+                            "type": "string",
+                            "pattern": "\\w[ ]?\\w"
+                        },
+                        "leaf": {
+                            "type": "integer",
+                            "minimum": 2,
+                            "maximum": 10
+                        },
+                        "poisonus": {
+                            "type": "boolean"
+                        },
+                        "category": {
+                            "type": "string",
+                            "enum": [
+                                "a",
+                                "b",
+                                "c"
+                            ]
+                        }
                     },
-                    "leaf": {
-                        "type": "integer"
-                    },
-                    "poisonus": {
-                        "type": "boolean"
-                    },
-                    "category": {
-                        "type": "string",
-                        "enum": [
-                            "a",
-                            "b",
-                            "c"
-                        ]
+                    "patternProperties": {
+                        "\\d": {
+                            "type": "boolean"
+                        }
                     }
                 }
-            },
+            ],
+            "additionalItems": true,
             "required": [
                 "plantname",
                 "leaf",
                 "posonus",
                 "category"
             ]
+        },
+        "birth": {
+            "type": "string",
+            "format": "date-time"
         }
     },
     "required": [
