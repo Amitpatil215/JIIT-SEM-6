@@ -7,5 +7,5 @@
 *.o
 *.so
 *.zip
-*.pdf
+# *.pdf
 **/node_modules
