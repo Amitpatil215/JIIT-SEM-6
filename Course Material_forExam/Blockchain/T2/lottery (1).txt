@@ -1,0 +1,93 @@
+1.
+pragma solidity ^0.8.13;
+contract Lottery {
+    
+    constructor () {
+
+    }
+}
+
+
+2.
+    address public manager;
+	address [] public players;
+    
+    constructor () {
+        manager = msg.sender;
+    }
+
+
+3.
+function enter() public {
+		players.push (msg.sender);
+    }
+
+
+4. 
+    function enter() public payable{
+        require(msg.value > .01 ether);
+        players.push(msg.sender);
+    }
+
+
+5 (a). Public
+    function random() public view returns (uint) { 
+        return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players.length)));
+    }
+
+5 (b). Private
+    function random() private view returns (uint) { 
+        return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players.length)));
+    }
+
+6.
+function pickWinner() public {
+   uint8 index = uint8(random() % players.length);
+}
+
+
+7.
+    function pickWinner() public {
+        uint8 index = uint8(random() % players.length);
+        players[index].transfer(address (this).balance);
+        players = new address payable [](0);
+    }
+
+8. Error
+    address payable[] public players;
+
+9. Error
+        players.push(payable(msg.sender));
+
+10. Error
+        players = new address payable [](0);
+
+11. Error
+
+12. only manager can pick
+
+    function pickWinner() public {
+	require(msg.sender == manager);
+        uint8 index = uint8(random() % players.length);
+        players[index].transfer(address (this).balance);
+        players = new address payable [](0);
+    }
+
+
+13. code reusability using modifier
+
+    function pickWinner() public restricted {
+        uint8 index = uint8(random() % players.length);
+        players[index].transfer(address (this).balance);
+        players = new address payable [](0);
+    }
+
+    modifier restricted {
+        require(msg.sender == manager);
+        _;
+    }
+
+14.
+    function getPlayers() public view returns (address payable [] memory) {
+        return players;
+    }
